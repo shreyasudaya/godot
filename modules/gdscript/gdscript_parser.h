@@ -311,6 +311,7 @@ public:
 			GET_NODE,
 			IDENTIFIER,
 			IF,
+			IFHIN,
 			LAMBDA,
 			LITERAL,
 			MATCH,
@@ -922,6 +923,7 @@ public:
 
 		IfNode() {
 			type = IF;
+			type = IFHIN;
 		}
 	};
 
