@@ -923,7 +923,6 @@ public:
 
 		IfNode() {
 			type = IF;
-			type = IFHIN;
 		}
 	};
 

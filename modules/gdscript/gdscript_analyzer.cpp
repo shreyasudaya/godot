@@ -1500,6 +1500,9 @@ void GDScriptAnalyzer::resolve_node(GDScriptParser::Node *p_node, bool p_is_root
 		case GDScriptParser::Node::IF:
 			resolve_if(static_cast<GDScriptParser::IfNode *>(p_node));
 			break;
+		case GDScriptParser::Node::IFHIN:
+			resolve_if(static_cast<GDScriptParser::IfNode *>(p_node));
+			break;
 		case GDScriptParser::Node::SUITE:
 			resolve_suite(static_cast<GDScriptParser::SuiteNode *>(p_node));
 			break;
@@ -1860,6 +1863,7 @@ void GDScriptAnalyzer::decide_suite_type(GDScriptParser::Node *p_suite, GDScript
 	}
 	switch (p_statement->type) {
 		case GDScriptParser::Node::IF:
+		case GDScriptParser::Node::IFHIN:
 		case GDScriptParser::Node::FOR:
 		case GDScriptParser::Node::MATCH:
 		case GDScriptParser::Node::PATTERN:
@@ -2546,6 +2550,7 @@ void GDScriptAnalyzer::reduce_expression(GDScriptParser::ExpressionNode *p_expre
 		case GDScriptParser::Node::FOR:
 		case GDScriptParser::Node::FUNCTION:
 		case GDScriptParser::Node::IF:
+		case GDScriptParser::Node::IFHIN:
 		case GDScriptParser::Node::MATCH:
 		case GDScriptParser::Node::MATCH_BRANCH:
 		case GDScriptParser::Node::PARAMETER:
