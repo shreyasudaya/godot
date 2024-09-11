@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  translation_server.compat.inc                                         */
+/*  GodotEditor.kt                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,11 +28,12 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef DISABLE_DEPRECATED
+package org.godotengine.editor
 
-void TranslationServer::_bind_compatibility_methods() {
-	ClassDB::bind_compatibility_method(D_METHOD("translate", "message", "context"), &TranslationServer::translate, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("translate_plural", "message", "plural_message", "n", "context"), &TranslationServer::translate_plural, DEFVAL(""));
+/**
+ * Primary window of the Godot Editor.
+ *
+ * This is the implementation of the editor used when running on regular Android devices.
+ */
+open class GodotEditor : BaseGodotEditor() {
 }
-
-#endif
