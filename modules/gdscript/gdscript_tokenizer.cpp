@@ -56,6 +56,7 @@ static const char *token_names[] = {
 	"!=", // BANG_EQUAL,
 	// Logical
 	"and", // AND,
+	"और", // Hindi AND
 	"or", // OR,
 	"not", // NOT,
 	"&&", // AMPERSAND_AMPERSAND,
@@ -206,6 +207,7 @@ bool GDScriptTokenizer::Token::is_node_name() const {
 	switch (type) {
 		case IDENTIFIER:
 		case AND:
+		case ANDHIN:
 		case AS:
 		case ASSERT:
 		case AWAIT:
@@ -490,6 +492,7 @@ GDScriptTokenizer::Token GDScriptTokenizerText::annotation() {
 	KEYWORD_GROUP('a')                       \
 	KEYWORD("as", Token::AS)                 \
 	KEYWORD("and", Token::AND)				 \
+	KEYWORD("और", Token:: ANDHIN)           \
 	KEYWORD("assert", Token::ASSERT)         \
 	KEYWORD("await", Token::AWAIT)           \
 	KEYWORD_GROUP('b')                       \

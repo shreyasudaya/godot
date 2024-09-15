@@ -2767,6 +2767,7 @@ GDScriptParser::ExpressionNode *GDScriptParser::parse_binary_operator(Expression
 			operation->variant_op = Variant::OP_BIT_XOR;
 			break;
 		case GDScriptTokenizer::Token::AND:
+		case GDScriptTokenizer::Token::ANDHIN:
 		case GDScriptTokenizer::Token::AMPERSAND_AMPERSAND:
 			operation->operation = BinaryOpNode::OP_LOGIC_AND;
 			operation->variant_op = Variant::OP_AND;
@@ -3934,6 +3935,7 @@ GDScriptParser::ParseRule *GDScriptParser::get_rule(GDScriptTokenizer::Token::Ty
 		// Logical
 		{ nullptr,                                          &GDScriptParser::parse_binary_operator,      	PREC_LOGIC_AND }, // AND,
 		{ nullptr,                                          &GDScriptParser::parse_binary_operator,      	PREC_LOGIC_OR }, // OR,
+		{ nullptr,                                           &GDScriptParser::parse_binary_operator,        PREC_LOGIC_AND}, //ANDHIN
 		{ &GDScriptParser::parse_unary_operator,         	&GDScriptParser::parse_binary_not_in_operator,	PREC_CONTENT_TEST }, // NOT,
 		{ nullptr,                                          &GDScriptParser::parse_binary_operator,			PREC_LOGIC_AND }, // AMPERSAND_AMPERSAND,
 		{ nullptr,                                          &GDScriptParser::parse_binary_operator,			PREC_LOGIC_OR }, // PIPE_PIPE,
@@ -5186,6 +5188,9 @@ void GDScriptParser::TreePrinter::print_binary_op(BinaryOpNode *p_binary_op) {
 			break;
 		case BinaryOpNode::OP_LOGIC_AND:
 			push_text(" AND ");
+			break;
+		case BinaryOpNode:: OP_LOGIC_AND_HIN:
+			push_text(" और ");
 			break;
 		case BinaryOpNode::OP_LOGIC_OR:
 			push_text(" OR ");

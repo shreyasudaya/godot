@@ -68,6 +68,7 @@ public:
 			BANG_EQUAL,
 			// Logical
 			AND,
+			ANDHIN,
 			OR,
 			NOT,
 			AMPERSAND_AMPERSAND,
