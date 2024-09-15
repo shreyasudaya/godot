@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  control.compat.inc                                                    */
+/*  DeviceUtils.kt                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,21 +28,25 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef DISABLE_DEPRECATED
+/**
+ * Contains utility methods for detecting specific devices.
+ */
+@file:JvmName("DeviceUtils")
 
-void Control::_bind_compatibility_methods() {
-	ClassDB::bind_compatibility_method(D_METHOD("get_theme_icon", "name", "theme_type"), &Control::get_theme_icon, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_theme_stylebox", "name", "theme_type"), &Control::get_theme_stylebox, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_theme_font", "name", "theme_type"), &Control::get_theme_font, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_theme_font_size", "name", "theme_type"), &Control::get_theme_font_size, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_theme_color", "name", "theme_type"), &Control::get_theme_color, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_theme_constant", "name", "theme_type"), &Control::get_theme_constant, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("has_theme_icon", "name", "theme_type"), &Control::has_theme_icon, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("has_theme_stylebox", "name", "theme_type"), &Control::has_theme_stylebox, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("has_theme_font", "name", "theme_type"), &Control::has_theme_font, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("has_theme_font_size", "name", "theme_type"), &Control::has_theme_font_size, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("has_theme_color", "name", "theme_type"), &Control::has_theme_color, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("has_theme_constant", "name", "theme_type"), &Control::has_theme_constant, DEFVAL(""));
+package org.godotengine.godot.utils
+
+import android.os.Build
+
+/**
+ * Returns true if running on Meta's Horizon OS.
+ */
+fun isHorizonOSDevice(): Boolean {
+	return "Oculus".equals(Build.BRAND, true)
 }
 
-#endif
+/**
+ * Returns true if running on a native Android XR device.
+ */
+fun isNativeXRDevice(): Boolean {
+	return isHorizonOSDevice()
+}

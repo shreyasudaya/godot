@@ -1,5 +1,5 @@
 /**************************************************************************/
-/*  translation.compat.inc                                                */
+/*  GodotEditor.kt                                                        */
 /**************************************************************************/
 /*                         This file is part of:                          */
 /*                             GODOT ENGINE                               */
@@ -28,14 +28,65 @@
 /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
 /**************************************************************************/
 
-#ifndef DISABLE_DEPRECATED
+package org.godotengine.editor
 
-void Translation::_bind_compatibility_methods() {
-	ClassDB::bind_compatibility_method(D_METHOD("add_message", "src_message", "xlated_message", "context"), &Translation::add_message, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("add_plural_message", "src_message", "xlated_messages", "context"), &Translation::add_plural_message, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_message", "src_message", "context"), &Translation::get_message, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("get_plural_message", "src_message", "src_plural_message", "n", "context"), &Translation::get_plural_message, DEFVAL(""));
-	ClassDB::bind_compatibility_method(D_METHOD("erase_message", "src_message", "context"), &Translation::erase_message, DEFVAL(""));
+import org.godotengine.godot.GodotLib
+import org.godotengine.godot.utils.isNativeXRDevice
+
+/**
+ * Primary window of the Godot Editor.
+ *
+ * This is the implementation of the editor used when running on Meta devices.
+ */
+open class GodotEditor : BaseGodotEditor() {
+
+	companion object {
+		private val TAG = GodotEditor::class.java.simpleName
+
+		internal val XR_RUN_GAME_INFO = EditorWindowInfo(GodotXRGame::class.java, 1667, ":GodotXRGame")
+
+		internal const val USE_SCENE_PERMISSION = "com.oculus.permission.USE_SCENE"
+	}
+
+	override fun getExcludedPermissions(): MutableSet<String> {
+		val excludedPermissions = super.getExcludedPermissions()
+		// The USE_SCENE permission is requested when the "xr/openxr/enabled" project setting
+		// is enabled.
+		excludedPermissions.add(USE_SCENE_PERMISSION)
+		return excludedPermissions
+	}
+
+	override fun retrieveEditorWindowInfo(args: Array<String>): EditorWindowInfo {
+		var hasEditor = false
+		var xrModeOn = false
+
+		var i = 0
+		while (i < args.size) {
+			when (args[i++]) {
+				EDITOR_ARG, EDITOR_ARG_SHORT, EDITOR_PROJECT_MANAGER_ARG, EDITOR_PROJECT_MANAGER_ARG_SHORT -> hasEditor = true
+				XR_MODE_ARG -> {
+					val argValue = args[i++]
+					xrModeOn = xrModeOn || ("on" == argValue)
+				}
+			}
+		}
+
+		return if (hasEditor) {
+			EDITOR_MAIN_INFO
+		} else {
+			val openxrEnabled = GodotLib.getGlobal("xr/openxr/enabled").toBoolean()
+			if (openxrEnabled && isNativeXRDevice()) {
+				XR_RUN_GAME_INFO
+			} else {
+				RUN_GAME_INFO
+			}
+		}
+	}
+
+	override fun getEditorWindowInfoForInstanceId(instanceId: Int): EditorWindowInfo? {
+		return when (instanceId) {
+			XR_RUN_GAME_INFO.windowId -> XR_RUN_GAME_INFO
+			else -> super.getEditorWindowInfoForInstanceId(instanceId)
+		}
+	}
 }
-
-#endif
