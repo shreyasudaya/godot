@@ -90,6 +90,7 @@ static const char *token_names[] = {
 	"^=", // CARET_EQUAL,
 	// Control flow
 	"if", // IF,
+	"जब", //Hindi IF
 	"elif", // ELIF,
 	"else", // ELSE,
 	"for", // FOR,
@@ -225,6 +226,7 @@ bool GDScriptTokenizer::Token::is_node_name() const {
 		case FOR:
 		case FUNC:
 		case IF:
+		case IFHIN:
 		case IN:
 		case IS:
 		case MATCH:
@@ -487,7 +489,7 @@ GDScriptTokenizer::Token GDScriptTokenizerText::annotation() {
 #define KEYWORDS(KEYWORD_GROUP, KEYWORD)     \
 	KEYWORD_GROUP('a')                       \
 	KEYWORD("as", Token::AS)                 \
-	KEYWORD("and", Token::AND)               \
+	KEYWORD("and", Token::AND)				 \
 	KEYWORD("assert", Token::ASSERT)         \
 	KEYWORD("await", Token::AWAIT)           \
 	KEYWORD_GROUP('b')                       \
@@ -508,6 +510,7 @@ GDScriptTokenizer::Token GDScriptTokenizerText::annotation() {
 	KEYWORD("func", Token::FUNC)             \
 	KEYWORD_GROUP('i')                       \
 	KEYWORD("if", Token::IF)                 \
+	KEYWORD("जब", Token::IFHIN)				\
 	KEYWORD("in", Token::IN)                 \
 	KEYWORD("is", Token::IS)                 \
 	KEYWORD_GROUP('m')                       \

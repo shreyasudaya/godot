@@ -1830,6 +1830,10 @@ GDScriptParser::Node *GDScriptParser::parse_statement() {
 			advance();
 			result = parse_if();
 			break;
+		case GDScriptTokenizer::Token::IFHIN:
+			advance();
+			result = parse_if();
+			break;
 		case GDScriptTokenizer::Token::FOR:
 			advance();
 			result = parse_for();
@@ -3963,6 +3967,7 @@ GDScriptParser::ParseRule *GDScriptParser::get_rule(GDScriptTokenizer::Token::Ty
 		{ nullptr,                                          &GDScriptParser::parse_assignment,           	PREC_ASSIGNMENT }, // CARET_EQUAL,
 		// Control flow
 		{ nullptr,                                          &GDScriptParser::parse_ternary_operator,     	PREC_TERNARY }, // IF,
+		{ nullptr,											&GDScriptParser::parse_ternary_operator, 		PREC_TERNARY }, //IFHIN,
 		{ nullptr,                                          nullptr,                                        PREC_NONE }, // ELIF,
 		{ nullptr,                                          nullptr,                                        PREC_NONE }, // ELSE,
 		{ nullptr,                                          nullptr,                                        PREC_NONE }, // FOR,
@@ -4735,6 +4740,7 @@ bool GDScriptParser::warning_annotations(AnnotationNode *p_annotation, Node *p_t
 				// Contain bodies.
 				SIMPLE_CASE(Node::FOR, ForNode, list)
 				SIMPLE_CASE(Node::IF, IfNode, condition)
+				SIMPLE_CASE(Node::IFHIN,IfNode, condition)
 				SIMPLE_CASE(Node::MATCH, MatchNode, test)
 				SIMPLE_CASE(Node::WHILE, WhileNode, condition)
 #undef SIMPLE_CASE
@@ -5891,6 +5897,9 @@ void GDScriptParser::TreePrinter::print_statement(Node *p_statement) {
 			print_constant(static_cast<ConstantNode *>(p_statement));
 			break;
 		case Node::IF:
+			print_if(static_cast<IfNode *>(p_statement));
+			break;
+		case Node::IFHIN:
 			print_if(static_cast<IfNode *>(p_statement));
 			break;
 		case Node::FOR:

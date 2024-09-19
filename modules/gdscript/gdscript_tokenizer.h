@@ -102,6 +102,7 @@ public:
 			CARET_EQUAL,
 			// Control flow
 			IF,
+			IFHIN,
 			ELIF,
 			ELSE,
 			FOR,

@@ -313,6 +313,7 @@ public:
 			GET_NODE,
 			IDENTIFIER,
 			IF,
+			IFHIN,
 			LAMBDA,
 			LITERAL,
 			MATCH,
