@@ -14,15 +14,9 @@
 #include <iostream>
 
 void GDScriptTranspiler::initialize_translation_map() {
-    hindi_to_english_map["अगर"] = "if";
-    hindi_to_english_map["अन्य"] = "else";
-    hindi_to_english_map["लूप"] = "for";
-    hindi_to_english_map["जबतक"] = "while";
-    hindi_to_english_map["फंक्शन"] = "func";
-    hindi_to_english_map["वापस"] = "return";
-    hindi_to_english_map["कक्षा"] = "class";
-    hindi_to_english_map["नया"] = "new";
-    hindi_to_english_map["मुद्रित"] = "print";
+    hindi_to_english_map["जब"] = "if";
+    hindi_to_english_map["और"] = "and";
+    hindi_to_english_map["या"] = "or";
     // Add more Hindi keywords and their corresponding English translations here
 }
 
@@ -41,7 +35,6 @@ std::string GDScriptTranspiler::translate_to_english(const std::string &source_c
             // Replace with corresponding English keyword
             output_stream << hindi_to_english_map[word] << " ";
         } else {
-            // If not a Hindi keyword, keep it as is
             output_stream << word << " ";
         }
     }
